@@ -7,7 +7,7 @@ class NavBar extends Component {
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
                     <a className="navbar-brand" href="/#">
                         eCommerce
-                    </a>
+          </a>
 
                     <button
                         className="navbar-toggler"
@@ -26,7 +26,7 @@ class NavBar extends Component {
                             <li className="nav-item">
                                 <a className="nav-link" href="/#">
                                     Home
-            </a>
+                </a>
                             </li>
                         </ul>
                     </div>
