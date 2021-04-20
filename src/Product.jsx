@@ -12,7 +12,19 @@ export default class Product extends Component {
             <div className="col-lg-6">
                 <div className="card m-2">
                     <div className="card-body">
-                        <div className="text-muted"># {this.state.product.id}</div>
+                        <div className="text-muted">
+                            # {this.state.product.id}
+                            {/* delete button starts */}
+                            <span
+                                className="pull-right hand-icon"
+                                onClick={() => {
+                                    this.props.onDelete(this.state.product);
+                                }}
+                            >
+                                <i className="fa fa-times"></i>
+                            </span>
+                            {/* delete button ends */}
+                        </div>
 
                         <h5 className="pt-2 border-top">
                             {this.state.product.productName}
@@ -34,7 +46,7 @@ export default class Product extends Component {
                                     }}
                                 >
                                     +
-                </button>
+                                </button>
 
                                 <button
                                     className="btn btn-outline-success"
@@ -43,7 +55,7 @@ export default class Product extends Component {
                                     }}
                                 >
                                     -
-                </button>
+                                </button>
                             </div>
                         </div>
                         {/* float-left ends here */}
