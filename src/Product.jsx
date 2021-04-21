@@ -46,7 +46,7 @@ export default class Product extends Component {
                                     }}
                                 >
                                     +
-                                </button>
+                </button>
 
                                 <button
                                     className="btn btn-outline-success"
@@ -55,7 +55,7 @@ export default class Product extends Component {
                                     }}
                                 >
                                     -
-                                </button>
+                </button>
                             </div>
                         </div>
                         {/* float-left ends here */}
@@ -66,5 +66,10 @@ export default class Product extends Component {
                 </div>
             </div>
         );
+    }
+
+    //Executes when the current instance of current component is being deleted from memory
+    componentWillUnmount() {
+        console.log("componentWillUnmount - Product");
     }
 }
