@@ -1,75 +1,79 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
 
-class NavBar extends Component {
+export default class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { email: "", password: "", message: "" };
+    }
+
     render() {
         return (
-            <React.Fragment>
-                <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-style">
-                    <a className="navbar-brand" href="/#">
-                        eCommerce
-          </a>
+            <div>
+                <h4 className="m-1 p-2 border-bottom">Login</h4>
 
-                    <button
-                        className="navbar-toggler"
-                        type="button"
-                        data-toggle="collapse"
-                        data-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                {/* Email starts */}
+                <div className="form-group form-row">
+                    <label className="col-lg-4">Email:</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={this.state.email}
+                        onChange={(event) => {
+                            this.setState({ email: event.target.value });
+                        }}
+                    />
+                </div>
+                {/* Email ends */}
 
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                    exact={true}
-                                >
-                                    Login
-                </NavLink>
-                            </li>
+                {/* Password starts */}
+                <div className="form-group form-row">
+                    <label className="col-lg-4">Password:</label>
+                    <input
+                        type="password"
+                        className="form-control"
+                        value={this.state.password}
+                        onChange={(event) => {
+                            this.setState({ password: event.target.value });
+                        }}
+                    />
+                </div>
+                {/* Password ends */}
 
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/dashboard"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Dashboard
-                </NavLink>
-                            </li>
+                <div className="text-right">
+                    {this.state.message}
 
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/customers"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Customers
-                </NavLink>
-                            </li>
-
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/cart"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Shopping Cart
-                </NavLink>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </React.Fragment>
+                    <button className="btn btn-primary m-1" onClick={this.onLoginClick}>
+                        Login
+          </button>
+                </div>
+            </div>
         );
-    }
-}
+    } //end of render
 
-export default NavBar;
+    //Executes when the user clicks on Login
+    onLoginClick = async () => {
+        console.log(this.state);
+
+        var response = await fetch(
+            `http://localhost:5000/users?email=${this.state.email}&password=${this.state.password}`,
+            { method: "GET" }
+        );
+
+        var body = await response.json();
+        console.log(body);
+
+        if (body.length > 0) {
+            //success
+            this.setState({
+                message: <span className="text-success">Successfully Logged-in</span>,
+            });
+        } else {
+            //error
+            this.setState({
+                message: (
+                    <span className="text-danger">Invalid login, please try again</span>
+                ),
+            });
+        }
+    };
+}
