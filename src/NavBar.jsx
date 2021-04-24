@@ -24,46 +24,62 @@ class NavBar extends Component {
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                    exact={true}
-                                >
-                                    Login
-                </NavLink>
-                            </li>
+                            {!this.props.isLoggedIn ? (
+                                <li className="nav-item">
+                                    <NavLink
+                                        to="/"
+                                        className="nav-link"
+                                        activeClassName="active"
+                                        exact={true}
+                                    >
+                                        Login
+                  </NavLink>
+                                </li>
+                            ) : (
+                                ""
+                            )}
 
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/dashboard"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Dashboard
-                </NavLink>
-                            </li>
+                            {this.props.isLoggedIn ? (
+                                <li className="nav-item">
+                                    <NavLink
+                                        to="/dashboard"
+                                        className="nav-link"
+                                        activeClassName="active"
+                                    >
+                                        Dashboard
+                  </NavLink>
+                                </li>
+                            ) : (
+                                ""
+                            )}
 
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/customers"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Customers
-                </NavLink>
-                            </li>
+                            {this.props.isLoggedIn ? (
+                                <li className="nav-item">
+                                    <NavLink
+                                        to="/customers"
+                                        className="nav-link"
+                                        activeClassName="active"
+                                    >
+                                        Customers
+                  </NavLink>
+                                </li>
+                            ) : (
+                                ""
+                            )}
 
-                            <li className="nav-item">
-                                <NavLink
-                                    to="/cart"
-                                    className="nav-link"
-                                    activeClassName="active"
-                                >
-                                    Shopping Cart
-                </NavLink>
-                            </li>
+                            {this.props.isLoggedIn ? (
+                                <li className="nav-item">
+                                    <NavLink
+                                        to="/cart"
+                                        className="nav-link"
+                                        activeClassName="active"
+                                    >
+                                        Shopping Cart
+                  </NavLink>
+                                </li>
+                            ) : (
+                                ""
+                            )}
                         </ul>
                     </div>
                 </nav>

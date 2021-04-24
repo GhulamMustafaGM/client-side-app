@@ -9,13 +9,27 @@ import { BrowserRouter } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { isLoggedIn: false };
+  }
+
   render() {
     return (
       <BrowserRouter>
-        <NavBar />
+        <NavBar isLoggedIn={this.state.isLoggedIn} />
         <div className="container-fluid">
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route
+              path="/"
+              exact
+              render={(props) => (
+                <Login
+                  {...props}
+                  updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+                />
+              )}
+            />
             <Route path="/dashboard" exact component={Dashboard} />
             <Route path="/customers" exact component={CustomersList} />
             <Route path="/cart" exact component={ShoppingCart} />
@@ -25,4 +39,9 @@ export default class App extends Component {
       </BrowserRouter>
     );
   }
+
+  //This method can be called by child components to update isLoggedIn property of the state
+  updateIsLoggedInStatus = (status) => {
+    this.setState({ isLoggedIn: status });
+  };
 }
