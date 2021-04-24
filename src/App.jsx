@@ -13,13 +13,15 @@ export default class App extends Component {
     return (
       <BrowserRouter>
         <NavBar />
-        <Switch>
-          <Route path="/" exact component={Login} />
-          <Route path="/dashboard" exact component={Dashboard} />
-          <Route path="/customers" exact component={CustomersList} />
-          <Route path="/cart" exact component={ShoppingCart} />
-          <Route path="*" component={NoMatchPage} />
-        </Switch>
+        <div className="container-fluid">
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/customers" exact component={CustomersList} />
+            <Route path="/cart" exact component={ShoppingCart} />
+            <Route path="*" component={NoMatchPage} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
