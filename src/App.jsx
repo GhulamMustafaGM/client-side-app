@@ -5,8 +5,9 @@ import Login from "./Login";
 import ShoppingCart from "./ShoppingCart";
 import CustomersList from "./CustomersList";
 import { Route, Switch } from "react-router";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
+import history from "./history";
 
 export default class App extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <NavBar isLoggedIn={this.state.isLoggedIn} />
         <div className="container-fluid">
           <Switch>
@@ -36,7 +37,7 @@ export default class App extends Component {
             <Route path="*" component={NoMatchPage} />
           </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 
