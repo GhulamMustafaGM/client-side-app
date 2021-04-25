@@ -18,7 +18,11 @@ export default class App extends Component {
   render() {
     return (
       <Router history={history}>
-        <NavBar isLoggedIn={this.state.isLoggedIn} />
+        <NavBar
+          isLoggedIn={this.state.isLoggedIn}
+          updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+        />
+
         <div className="container-fluid">
           <Switch>
             <Route
