@@ -5,9 +5,8 @@ import Login from "./Login";
 import ShoppingCart from "./ShoppingCart";
 import CustomersList from "./CustomersList";
 import { Route, Switch } from "react-router";
-import { Router } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
-import history from "./history";
 import SideBar from "./SideBar";
 import ProductByID from "./ProductByID";
 
@@ -19,7 +18,7 @@ export default class App extends Component {
 
   render() {
     return (
-      <Router history={history}>
+      <HashRouter>
         <NavBar
           isLoggedIn={this.state.isLoggedIn}
           updateIsLoggedInStatus={this.updateIsLoggedInStatus}
@@ -52,7 +51,7 @@ export default class App extends Component {
             </div>
           </div>
         </div>
-      </Router>
+      </HashRouter>
     );
   }
 
