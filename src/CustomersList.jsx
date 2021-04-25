@@ -1,47 +1,14 @@
 import React, { Component } from "react";
 
 export default class CustomersList extends Component {
-    state = {
-        pageTitle: "Customers",
-        customersCount: 5,
-        customers: [
-            {
-                id: 1,
-                name: "Scott",
-                phone: "123-456",
-                address: { city: "New Delhi" },
-                photo: "https://picsum.photos/id/1010/60",
-            },
-            {
-                id: 2,
-                name: "Jones",
-                phone: "982-014",
-                address: { city: "New Jersy" },
-                photo: "https://picsum.photos/id/1011/60",
-            },
-            {
-                id: 3,
-                name: "Allen",
-                phone: "889-921",
-                address: { city: "London" },
-                photo: "https://picsum.photos/id/1012/60",
-            },
-            {
-                id: 4,
-                name: "James",
-                phone: null,
-                address: { city: "Berlin" },
-                photo: "https://picsum.photos/id/1013/60",
-            },
-            {
-                id: 5,
-                name: "John",
-                phone: null,
-                address: { city: "New York" },
-                photo: "https://picsum.photos/id/1014/60",
-            },
-        ],
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            pageTitle: "Customers",
+            customersCount: 5,
+            customers: [],
+        };
+    }
 
     render() {
         return (
@@ -74,9 +41,17 @@ export default class CustomersList extends Component {
         );
     }
 
-    componentDidMount() {
+    componentDidMount = async () => {
         document.title = "Customers - eCommerce";
-    }
+
+        //'get' request('/customers')
+
+        let response = await fetch("http://localhost:5000/customers", {
+            method: "GET",
+        });
+        let body = await response.json();
+        this.setState({ customers: body });
+    };
 
     //Executes when the user clicks on Refresh button
     onRefreshClick = () => {
