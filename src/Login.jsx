@@ -4,7 +4,7 @@ import history from "./history";
 export default class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = { email: "", password: "", message: "" };
+        this.state = { email: "scott@test.com", password: "scott123", message: "" };
     }
 
     render() {
@@ -52,6 +52,10 @@ export default class Login extends Component {
             </div>
         );
     } //end of render
+
+    componentDidMount() {
+        document.title = "Login - eCommerce";
+    }
 
     //Executes when the user clicks on Login
     onLoginClick = async () => {
