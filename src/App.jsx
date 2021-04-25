@@ -8,6 +8,7 @@ import { Route, Switch } from "react-router";
 import { Router } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
 import history from "./history";
+import SideBar from "./SideBar";
 
 export default class App extends Component {
   constructor(props) {
@@ -24,22 +25,30 @@ export default class App extends Component {
         />
 
         <div className="container-fluid">
-          <Switch>
-            <Route
-              path="/"
-              exact
-              render={(props) => (
-                <Login
-                  {...props}
-                  updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+          <div className="row">
+            <div className="col-lg-3">
+              {this.state.isLoggedIn ? <SideBar></SideBar> : ""}
+            </div>
+
+            <div className="col-lg-9">
+              <Switch>
+                <Route
+                  path="/"
+                  exact
+                  render={(props) => (
+                    <Login
+                      {...props}
+                      updateIsLoggedInStatus={this.updateIsLoggedInStatus}
+                    />
+                  )}
                 />
-              )}
-            />
-            <Route path="/dashboard" exact component={Dashboard} />
-            <Route path="/customers" exact component={CustomersList} />
-            <Route path="/cart" exact component={ShoppingCart} />
-            <Route path="*" component={NoMatchPage} />
-          </Switch>
+                <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/customers" exact component={CustomersList} />
+                <Route path="/cart" exact component={ShoppingCart} />
+                <Route path="*" component={NoMatchPage} />
+              </Switch>
+            </div>
+          </div>
         </div>
       </Router>
     );
