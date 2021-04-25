@@ -79,6 +79,7 @@ export default class ProductByID extends Component {
     }
 
     componentDidMount = async () => {
+        document.title = `${this.state.product.productName} - eCommerce`;
         //get the value of route parameter
         var id = this.props.match.params.id;
 
