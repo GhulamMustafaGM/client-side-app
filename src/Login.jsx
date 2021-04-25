@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import history from "./history";
 
 export default class Login extends Component {
     constructor(props) {
@@ -81,7 +80,7 @@ export default class Login extends Component {
             this.props.updateIsLoggedInStatus(true);
 
             //navigate to dashboard
-            history.replace("/dashboard");
+            this.props.history.replace("/dashboard");
         } else {
             //error
             this.setState({
