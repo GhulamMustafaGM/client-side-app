@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import history from "./history";
 
 class NavBar extends Component {
     render() {
@@ -80,12 +81,38 @@ class NavBar extends Component {
                             ) : (
                                 ""
                             )}
+
+                            {this.props.isLoggedIn ? (
+                                <li className="nav-item">
+                                    <a
+                                        href="/#"
+                                        className="nav-link"
+                                        onClick={this.onLogoutClick}
+                                    >
+                                        Logout
+                  </a>
+                                </li>
+                            ) : (
+                                ""
+                            )}
                         </ul>
                     </div>
                 </nav>
             </React.Fragment>
         );
     }
+
+    //Executes when the user clicks on the Logout link
+    onLogoutClick = (event) => {
+        //prevent the page refresh when the user clicks on Logout link
+        event.preventDefault();
+
+        //update isLoggedInStatus as false
+        this.props.updateIsLoggedInStatus(false);
+
+        //navigate login component
+        history.replace("/");
+    };
 }
 
 export default NavBar;
