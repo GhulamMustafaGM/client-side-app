@@ -42,6 +42,7 @@ export default class ShoppingCart extends Component {
 
     //Executes after constructor and render method (includes life cycle of child components, if any) of current component
     componentDidMount = async () => {
+        document.title = "Cart - eCommerce";
         //send request to server
         var response = await fetch("http://localhost:5000/products", {
             method: "GET",
