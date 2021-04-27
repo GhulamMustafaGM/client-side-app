@@ -34,6 +34,7 @@ export default class CustomersList extends Component {
                             <th>Customer Name</th>
                             <th>Phone</th>
                             <th>City</th>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>{this.getCustomerRow()}</tbody>
@@ -53,7 +54,7 @@ export default class CustomersList extends Component {
         if (response.ok) {
             //200 to 299
             let body = await response.json();
-            this.setState({ customers: body });
+            this.setState({ customers: body, customersCount: body.length });
         } else {
             console.log("Error: " + response.status);
         }
@@ -88,7 +89,17 @@ export default class CustomersList extends Component {
                     <td>{this.getPhoneToRender(cust.phone)}</td>
                     <td>{cust.address.city}</td>
                     <td>
-                        <Link to={`/edit-customer/${cust.id}`}>Edit</Link>
+                        <Link to={`/edit-customer/${cust.id}`} className="btn btn-info">
+                            Edit
+            </Link>
+                        <button
+                            className="btn btn-danger"
+                            onClick={() => {
+                                this.onDeleteClick(cust.id);
+                            }}
+                        >
+                            Delete
+            </button>
                     </td>
                 </tr>
             );
@@ -107,5 +118,24 @@ export default class CustomersList extends Component {
 
         //update "customers" array in the state
         this.setState({ customers: custArr });
+    };
+
+    onDeleteClick = async (id) => {
+        if (window.confirm("Are you sure to delete this customer?")) {
+            //make DELETE request
+            var response = await fetch(`http://localhost:5000/customers/${id}`, {
+                method: "DELETE",
+            });
+
+            if (response.ok) {
+                //200 to 299
+                var allCustomers = [...this.state.customers];
+
+                allCustomers = allCustomers.filter((cust) => {
+                    return cust.id != id;
+                });
+                this.setState({ customers: allCustomers });
+            }
+        }
     };
 }
