@@ -87,6 +87,9 @@ export default class CustomersList extends Component {
                     <td>{cust.name}</td>
                     <td>{this.getPhoneToRender(cust.phone)}</td>
                     <td>{cust.address.city}</td>
+                    <td>
+                        <Link to={`/edit-customer/${cust.id}`}>Edit</Link>
+                    </td>
                 </tr>
             );
         });
