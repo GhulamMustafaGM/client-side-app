@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class CustomersList extends Component {
     constructor(props) {
@@ -20,9 +21,9 @@ export default class CustomersList extends Component {
                         {this.state.customersCount}
                     </span>
 
-                    <button className="btn btn-info" onClick={this.onRefreshClick}>
-                        Refresh
-          </button>
+                    <Link to="/new-customer" className="btn btn-primary">
+                        New Customer
+          </Link>
                 </h4>
 
                 <table className="table">
@@ -49,14 +50,13 @@ export default class CustomersList extends Component {
         let response = await fetch("http://localhost:5000/customers", {
             method: "GET",
         });
-        let body = await response.json();
-        this.setState({ customers: body });
-    };
-
-    //Executes when the user clicks on Refresh button
-    onRefreshClick = () => {
-        //Update the state using setState method - so that react updates the Browser DOM automatically
-        this.setState({ customersCount: 7 });
+        if (response.ok) {
+            //200 to 299
+            let body = await response.json();
+            this.setState({ customers: body });
+        } else {
+            console.log("Error: " + response.status);
+        }
     };
 
     getPhoneToRender = (phone) => {
