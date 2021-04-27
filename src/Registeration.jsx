@@ -8,6 +8,13 @@ class Register extends Component {
             password: "",
             fullName: "",
             dateOfBirth: "",
+            controls: ["email", "password", "fullName", "dateOfBirth"],
+            errors: {
+                email: [],
+                password: [],
+                fullName: [],
+                dateOfBirth: [],
+            },
         };
     }
 
@@ -29,7 +36,7 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.email}
                                 onChange={(event) => {
-                                    this.setState({ email: event.target.value });
+                                    this.setState({ email: event.target.value }, this.validate);
                                 }}
                             />
                         </div>
@@ -48,7 +55,10 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.password}
                                 onChange={(event) => {
-                                    this.setState({ password: event.target.value });
+                                    this.setState(
+                                        { password: event.target.value },
+                                        this.validate
+                                    );
                                 }}
                             />
                         </div>
@@ -67,7 +77,10 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.fullName}
                                 onChange={(event) => {
-                                    this.setState({ fullName: event.target.value });
+                                    this.setState(
+                                        { fullName: event.target.value },
+                                        this.validate
+                                    );
                                 }}
                             />
                         </div>
@@ -86,7 +99,10 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.dateOfBirth}
                                 onChange={(event) => {
-                                    this.setState({ dateOfBirth: event.target.value });
+                                    this.setState(
+                                        { dateOfBirth: event.target.value },
+                                        this.validate
+                                    );
                                 }}
                             />
                         </div>
@@ -103,12 +119,54 @@ class Register extends Component {
                                     Register
                 </button>
                             </div>
+
+                            <ul className="text-danger">
+                                {Object.keys(this.state.errors).map((control) => {
+                                    return this.state.errors[control].map((err) => {
+                                        return <li key={err}>{err}</li>;
+                                    });
+                                })}
+                            </ul>
+
+                            <div>{JSON.stringify(this.state.errors)}</div>
                         </div>
                     </div>
                 </div>
             </div>
         );
-    }
+    } //end of render
+
+    validate = () => {
+        const validEmailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+        let errors = {};
+
+        //reading each control from 'controls' array
+        this.state.controls.forEach((control) => {
+            errors[control] = [];
+
+            switch (control) {
+                case "email":
+                    //email can't be blank
+                    if (!this.state[control]) {
+                        errors[control].push("Email can't be blank");
+                    }
+
+                    //checking email reg exp
+                    if (this.state.email) {
+                        if (!validEmailRegex.test(this.state[control])) {
+                            errors[control].push("Proper emaail address is expected");
+                        }
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+        //set errors
+        this.setState({ errors });
+    };
 }
 
 export default Register;
