@@ -15,6 +15,7 @@ class Register extends Component {
                 fullName: [],
                 dateOfBirth: [],
             },
+            message: "",
         };
     }
 
@@ -111,6 +112,7 @@ class Register extends Component {
 
                     <div className="row">
                         <div className="col-lg-12">
+                            <div className="text-right">{this.state.message}</div>
                             <div className="text-right">
                                 <button
                                     className="btn btn-success m-2"
@@ -207,6 +209,31 @@ class Register extends Component {
 
         //set errors
         this.setState({ errors });
+    };
+
+    //Checks state.errors property for error messages
+    isValid = () => {
+        let valid = true;
+
+        //reading all controls from this.state.errors
+        for (let control in this.state.errors) {
+            if (this.state.errors[control].length > 0) {
+                valid = false;
+            }
+        }
+        return valid;
+    };
+
+    //Executes when the user clicks on Register button
+    onRegisterClick = () => {
+        //invoke validate method to check all control's values
+        this.validate();
+
+        if (this.isValid()) {
+            this.setState({ message: "Valid" });
+        } else {
+            this.setState({ message: "Invalid" });
+        }
     };
 }
 
