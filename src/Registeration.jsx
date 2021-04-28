@@ -16,6 +16,12 @@ class Register extends Component {
                 dateOfBirth: [],
             },
             message: "",
+            dirty: {
+                email: false,
+                password: false,
+                fullName: false,
+                dateOfBirth: false,
+            },
         };
     }
 
@@ -35,9 +41,20 @@ class Register extends Component {
                                 type="text"
                                 id="email"
                                 className="form-control"
+                                autoFocus="autofocus"
                                 value={this.state.email}
                                 onChange={(event) => {
-                                    this.setState({ email: event.target.value }, this.validate);
+                                    let dirty = this.state.dirty;
+                                    dirty.email = true;
+                                    this.setState(
+                                        { email: event.target.value, dirty: dirty },
+                                        this.validate
+                                    );
+                                }}
+                                onBlur={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.email = true;
+                                    this.setState({ dirty: dirty }, this.validate);
                                 }}
                             />
                         </div>
@@ -56,10 +73,18 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.password}
                                 onChange={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.password = true;
+
                                     this.setState(
-                                        { password: event.target.value },
+                                        { password: event.target.value, dirty: dirty },
                                         this.validate
                                     );
+                                }}
+                                onBlur={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.password = true;
+                                    this.setState({ dirty: dirty }, this.validate);
                                 }}
                             />
                         </div>
@@ -78,10 +103,18 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.fullName}
                                 onChange={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.fullName = true;
+
                                     this.setState(
-                                        { fullName: event.target.value },
+                                        { fullName: event.target.value, dirty: dirty },
                                         this.validate
                                     );
+                                }}
+                                onBlur={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.fullName = true;
+                                    this.setState({ dirty: dirty }, this.validate);
                                 }}
                             />
                         </div>
@@ -100,10 +133,18 @@ class Register extends Component {
                                 className="form-control"
                                 value={this.state.dateOfBirth}
                                 onChange={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.dateOfBirth = true;
+
                                     this.setState(
-                                        { dateOfBirth: event.target.value },
+                                        { dateOfBirth: event.target.value, dirty: dirty },
                                         this.validate
                                     );
+                                }}
+                                onBlur={(event) => {
+                                    let dirty = this.state.dirty;
+                                    dirty.dateOfBirth = true;
+                                    this.setState({ dirty: dirty }, this.validate);
                                 }}
                             />
                         </div>
@@ -124,13 +165,17 @@ class Register extends Component {
 
                             <ul className="text-danger">
                                 {Object.keys(this.state.errors).map((control) => {
-                                    return this.state.errors[control].map((err) => {
-                                        return <li key={err}>{err}</li>;
-                                    });
+                                    if (this.state.dirty[control]) {
+                                        return this.state.errors[control].map((err) => {
+                                            return <li key={err}>{err}</li>;
+                                        });
+                                    } else {
+                                        return "";
+                                    }
                                 })}
                             </ul>
 
-                            <div>{JSON.stringify(this.state.errors)}</div>
+                            <div>{JSON.stringify(this.state)}</div>
                         </div>
                     </div>
                 </div>
@@ -226,6 +271,13 @@ class Register extends Component {
 
     //Executes when the user clicks on Register button
     onRegisterClick = () => {
+        //make all dirty
+        var dirty = this.state.dirty;
+        Object.keys(dirty).forEach((control) => {
+            dirty[control] = true;
+        });
+        this.setState({ dirty: dirty });
+
         //invoke validate method to check all control's values
         this.validate();
 
