@@ -10,6 +10,7 @@ class Register extends Component {
             dateOfBirth: "",
             gender: "",
             country: "",
+            receiveNewsLetters: false,
             controls: [
                 "email",
                 "password",
@@ -17,6 +18,7 @@ class Register extends Component {
                 "dateOfBirth",
                 "gender",
                 "country",
+                "receiveNewsLetters",
             ],
             errors: {
                 email: [],
@@ -25,6 +27,7 @@ class Register extends Component {
                 dateOfBirth: [],
                 gender: [],
                 country: [],
+                receiveNewsLetters: [],
             },
             message: "",
             dirty: {
@@ -34,6 +37,7 @@ class Register extends Component {
                 dateOfBirth: false,
                 gender: false,
                 country: false,
+                receiveNewsLetters: false,
             },
         };
     }
@@ -256,6 +260,47 @@ class Register extends Component {
                         </div>
                     </div>
                     {/* country ends */}
+
+                    {/* receiveNewsLetters starts */}
+                    <div className="form-group form-row">
+                        <label className="col-lg-4"></label>
+                        <div className="col-lg-8">
+                            <div className="form-check">
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    value="true"
+                                    checked={this.state.receiveNewsLetters}
+                                    onChange={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.receiveNewsLetters = true;
+                                        this.setState(
+                                            {
+                                                receiveNewsLetters: event.target.checked,
+                                                dirty: dirty,
+                                            },
+                                            this.validate
+                                        );
+                                    }}
+                                    onBlur={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.receiveNewsLetters = true;
+                                        this.setState({
+                                            dirty: dirty,
+                                        });
+                                    }}
+                                    id="receivenewsletters"
+                                />
+                                <label
+                                    className="form-check-label"
+                                    htmlFor="receivenewsletters"
+                                >
+                                    Receive News Letters
+                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {/* receiveNewsLetters ends */}
 
                     <div className="row">
                         <div className="col-lg-12">
