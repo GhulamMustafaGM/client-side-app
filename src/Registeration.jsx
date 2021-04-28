@@ -8,12 +8,14 @@ class Register extends Component {
             password: "",
             fullName: "",
             dateOfBirth: "",
-            controls: ["email", "password", "fullName", "dateOfBirth"],
+            gender: "",
+            controls: ["email", "password", "fullName", "dateOfBirth", "gender"],
             errors: {
                 email: [],
                 password: [],
                 fullName: [],
                 dateOfBirth: [],
+                gender: [],
             },
             message: "",
             dirty: {
@@ -21,6 +23,7 @@ class Register extends Component {
                 password: false,
                 fullName: false,
                 dateOfBirth: false,
+                gender: false,
             },
         };
     }
@@ -151,6 +154,62 @@ class Register extends Component {
                     </div>
                     {/* dateOfBirth ends */}
 
+                    {/* gender starts */}
+                    <div className="form-group form-row">
+                        <label className="col-lg-4">Gender</label>
+                        <div className="col-lg-8">
+                            <div className="form-check">
+                                <input
+                                    type="radio"
+                                    id="male"
+                                    name="gender"
+                                    className="form-check-input"
+                                    value="male"
+                                    checked={this.state.gender === "male" ? true : false}
+                                    onChange={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.gender = true;
+                                        this.setState({ gender: event.target.value, dirty: dirty });
+                                    }}
+                                    onBlur={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.gender = true;
+                                        this.setState({ dirty: dirty });
+                                    }}
+                                />
+
+                                <label className="form-check-label" htmlFor="male">
+                                    Male
+                </label>
+                            </div>
+                            <div className="form-check">
+                                <input
+                                    type="radio"
+                                    id="female"
+                                    name="gender"
+                                    value="female"
+                                    className="form-check-input"
+                                    checked={this.state.gender === "female" ? true : false}
+                                    onChange={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.gender = true;
+                                        this.setState({ gender: event.target.value, dirty: dirty });
+                                    }}
+                                    onBlur={(event) => {
+                                        let dirty = this.state.dirty;
+                                        dirty.gender = true;
+                                        this.setState({ dirty: dirty });
+                                    }}
+                                />
+
+                                <label className="form-check-label" htmlFor="female">
+                                    Female
+                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {/* gender ends */}
+
                     <div className="row">
                         <div className="col-lg-12">
                             <div className="text-right">{this.state.message}</div>
@@ -245,6 +304,14 @@ class Register extends Component {
                             errors[control].push("Minimum age is 18 years");
                         }
                     }
+                    break;
+
+                case "gender":
+                    //gender can't be blank
+                    if (!this.state[control]) {
+                        errors[control].push("Gender can't be blank");
+                    }
+
                     break;
 
                 default:
